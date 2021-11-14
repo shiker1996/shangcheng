@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oracle.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.oracle.po.Goods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="onshelf" property="onshelf" jdbcType="DATE" />
+    <result column="offshelf" property="offshelf" jdbcType="DATE" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="prodate" property="prodate" jdbcType="DATE" />
+    <result column="reldate" property="reldate" jdbcType="DATE" />
+    <result column="pride" property="pride" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, onshelf, offshelf, state, num, prodate, reldate, pride
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.oracle.po.Goods" >
+    insert into goods (id, name, onshelf, 
+      offshelf, state, num, 
+      prodate, reldate,pride)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{onshelf,jdbcType=DATE}, 
+      #{offshelf,jdbcType=DATE}, #{state,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
+      #{prodate,jdbcType=DATE}, #{reldate,jdbcType=DATE},#{pride,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.oracle.po.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="onshelf != null" >
+        onshelf,
+      </if>
+      <if test="offshelf != null" >
+        offshelf,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="prodate != null" >
+        prodate,
+      </if>
+      <if test="reldate != null" >
+        reldate,
+      </if>
+      <if test="pride != null" >
+        pride,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="onshelf != null" >
+        #{onshelf,jdbcType=DATE},
+      </if>
+      <if test="offshelf != null" >
+        #{offshelf,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="prodate != null" >
+        #{prodate,jdbcType=DATE},
+      </if>
+      <if test="reldate != null" >
+        #{reldate,jdbcType=DATE},
+      </if>
+      <if test="pride != null" >
+        #{pride,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oracle.po.Goods" >
+    update goods
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="onshelf != null" >
+        onshelf = #{onshelf,jdbcType=DATE},
+      </if>
+      <if test="offshelf != null" >
+        offshelf = #{offshelf,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="prodate != null" >
+        prodate = #{prodate,jdbcType=DATE},
+      </if>
+      <if test="reldate != null" >
+        reldate = #{reldate,jdbcType=DATE},
+      </if>
+      <if test="pride != null" >
+        pride = #{pride,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.oracle.po.Goods" >
+    update goods
+    set name = #{name,jdbcType=VARCHAR},
+      onshelf = #{onshelf,jdbcType=DATE},
+      offshelf = #{offshelf,jdbcType=DATE},
+      state = #{state,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      prodate = #{prodate,jdbcType=DATE},
+      reldate = #{reldate,jdbcType=DATE},
+      pride = #{pride,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

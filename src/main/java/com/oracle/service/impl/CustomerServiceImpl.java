@@ -12,10 +12,11 @@ public class CustomerServiceImpl implements CustomerService {
 	@Resource
 	private CustomerMapper customerMapper;
 	@Override
-	public Customer selectByPrimaryKey(String phone) {
+	public Customer selectByPhone(String phone) {
 		// TODO Auto-generated method stub
-		return customerMapper.selectByPrimaryKey(phone);
+		return customerMapper.selectByPhone(phone);
 	}
+
 	@Override
 	public int deleteByPrimaryKey(String phone) {
 		// TODO Auto-generated method stub

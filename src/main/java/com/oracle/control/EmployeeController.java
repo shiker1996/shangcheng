@@ -30,7 +30,6 @@ public class EmployeeController {
 	}
 	@RequestMapping("einfo")
 	private ModelAndView einfo(String phone){
-		System.out.println("123456");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("employee", employeeService.selectByPrimaryKey(phone));
 		mav.setViewName("einfo");

@@ -22,7 +22,7 @@ public class CustomerController {
 	@RequestMapping("cupdate")
 	private String cupdate(String phone,String password, HttpServletRequest request) {
 
-		Customer customer = customerService.selectByPrimaryKey(phone);
+		Customer customer = customerService.selectByPhone(phone);
 		customer.setPassword(password);
 		Login login = (Login) request.getSession().getAttribute("login");
 		login.setPassword(password);
@@ -33,8 +33,8 @@ public class CustomerController {
 	@RequestMapping("cinfo")
 	private ModelAndView cinfo(String phone){
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("customer", customerService.selectByPrimaryKey(phone));
-		mav.setViewName("info");
+        mav.addObject("customer", customerService.selectByPhone(phone));
+        mav.setViewName("info");
 		return mav;
 	}
 }

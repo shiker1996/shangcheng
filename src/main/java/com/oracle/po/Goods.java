@@ -1,8 +1,14 @@
 package com.oracle.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Goods {
+/**
+ * goods
+ *
+ * @author
+ */
+public class Goods implements Serializable {
     private Integer id;
 
     private String name;
@@ -18,8 +24,12 @@ public class Goods {
     private Date prodate;
 
     private Date reldate;
-    
+
     private String pride;
+
+    private String picUrl;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -34,7 +44,7 @@ public class Goods {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public Date getOnshelf() {
@@ -58,7 +68,7 @@ public class Goods {
     }
 
     public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+        this.state = state;
     }
 
     public Integer getNum() {
@@ -85,11 +95,19 @@ public class Goods {
         this.reldate = reldate;
     }
 
-	public String getPride() {
-		return pride;
-	}
+    public String getPride() {
+        return pride;
+    }
 
-	public void setPride(String pride) {
-		this.pride = pride;
-	}
+    public void setPride(String pride) {
+        this.pride = pride;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
 }

@@ -4,7 +4,7 @@ import com.oracle.po.Customer;
 
 public interface CustomerService {
 
-	public Customer selectByPrimaryKey(String phone);
+	public Customer selectByPhone(String phone);
 
 	public int deleteByPrimaryKey(String phone);
 

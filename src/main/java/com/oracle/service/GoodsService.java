@@ -1,5 +1,6 @@
 package com.oracle.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.oracle.po.Goods;
@@ -16,7 +17,9 @@ public interface GoodsService {
     public int updateByPrimaryKeySelective(Goods record);
 
     public List<Goods> selectAll();
-    
+
     public int updateByPrimaryKey(Goods record);
+
+    public Boolean isNotExist(String name);
 
 }

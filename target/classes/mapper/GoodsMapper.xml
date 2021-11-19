@@ -1,144 +1,286 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.oracle.dao.GoodsMapper" >
-  <resultMap id="BaseResultMap" type="com.oracle.po.Goods" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="onshelf" property="onshelf" jdbcType="DATE" />
-    <result column="offshelf" property="offshelf" jdbcType="DATE" />
-    <result column="state" property="state" jdbcType="VARCHAR" />
-    <result column="num" property="num" jdbcType="INTEGER" />
-    <result column="prodate" property="prodate" jdbcType="DATE" />
-    <result column="reldate" property="reldate" jdbcType="DATE" />
-    <result column="pride" property="pride" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, onshelf, offshelf, state, num, prodate, reldate, pride
-  </sql>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select 
-    <include refid="Base_Column_List" />
-    from goods
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from goods
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from goods
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.oracle.po.Goods" >
-    insert into goods (id, name, onshelf, 
-      offshelf, state, num, 
-      prodate, reldate,pride)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{onshelf,jdbcType=DATE}, 
-      #{offshelf,jdbcType=DATE}, #{state,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
-      #{prodate,jdbcType=DATE}, #{reldate,jdbcType=DATE},#{pride,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.oracle.po.Goods" >
-    insert into goods
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="onshelf != null" >
-        onshelf,
-      </if>
-      <if test="offshelf != null" >
-        offshelf,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="num != null" >
-        num,
-      </if>
-      <if test="prodate != null" >
-        prodate,
-      </if>
-      <if test="reldate != null" >
-        reldate,
-      </if>
-      <if test="pride != null" >
-        pride,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="onshelf != null" >
-        #{onshelf,jdbcType=DATE},
-      </if>
-      <if test="offshelf != null" >
-        #{offshelf,jdbcType=DATE},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=VARCHAR},
-      </if>
-      <if test="num != null" >
-        #{num,jdbcType=INTEGER},
-      </if>
-      <if test="prodate != null" >
-        #{prodate,jdbcType=DATE},
-      </if>
-      <if test="reldate != null" >
-        #{reldate,jdbcType=DATE},
-      </if>
-      <if test="pride != null" >
-        #{pride,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.oracle.po.Goods" >
-    update goods
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="onshelf != null" >
-        onshelf = #{onshelf,jdbcType=DATE},
-      </if>
-      <if test="offshelf != null" >
-        offshelf = #{offshelf,jdbcType=DATE},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=VARCHAR},
-      </if>
-      <if test="num != null" >
-        num = #{num,jdbcType=INTEGER},
-      </if>
-      <if test="prodate != null" >
-        prodate = #{prodate,jdbcType=DATE},
-      </if>
-      <if test="reldate != null" >
-        reldate = #{reldate,jdbcType=DATE},
-      </if>
-      <if test="pride != null" >
-        pride = #{pride,jdbcType=VARCHAR},
-      </if>
-    </set>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.GoodsMapper">
+    <resultMap id="BaseResultMap" type="com.oracle.po.Goods">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="onshelf" jdbcType="DATE" property="onshelf"/>
+        <result column="offshelf" jdbcType="DATE" property="offshelf"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+        <result column="num" jdbcType="INTEGER" property="num"/>
+        <result column="prodate" jdbcType="DATE" property="prodate"/>
+        <result column="reldate" jdbcType="DATE" property="reldate"/>
+        <result column="pride" jdbcType="VARCHAR" property="pride"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, `name`, onshelf, offshelf, `state`, num, prodate, reldate, pride, pic_url
+    </sql>
+    <select id="selectByExample" parameterType="com.oracle.po.GoodsExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from goods
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from goods
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from goods
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.oracle.po.GoodsExample">
+        delete from goods
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.oracle.po.Goods" useGeneratedKeys="true">
+        insert into goods (`name`, onshelf, offshelf,
+                           `state`, num, prodate, reldate,
+                           pride, pic_url)
+        values (#{name,jdbcType=VARCHAR}, #{onshelf,jdbcType=DATE}, #{offshelf,jdbcType=DATE},
+                #{state,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{prodate,jdbcType=DATE}, #{reldate,jdbcType=DATE},
+                #{pride,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.oracle.po.Goods"
+            useGeneratedKeys="true">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="onshelf != null">
+                onshelf,
+            </if>
+            <if test="offshelf != null">
+                offshelf,
+            </if>
+            <if test="state != null">
+                `state`,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="prodate != null">
+                prodate,
+            </if>
+            <if test="reldate != null">
+                reldate,
+            </if>
+            <if test="pride != null">
+                pride,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="onshelf != null">
+                #{onshelf,jdbcType=DATE},
+            </if>
+            <if test="offshelf != null">
+                #{offshelf,jdbcType=DATE},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=INTEGER},
+            </if>
+            <if test="prodate != null">
+                #{prodate,jdbcType=DATE},
+            </if>
+            <if test="reldate != null">
+                #{reldate,jdbcType=DATE},
+            </if>
+            <if test="pride != null">
+                #{pride,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.oracle.po.GoodsExample" resultType="java.lang.Long">
+        select count(*) from goods
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update goods
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                `name` = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.onshelf != null">
+                onshelf = #{record.onshelf,jdbcType=DATE},
+            </if>
+            <if test="record.offshelf != null">
+                offshelf = #{record.offshelf,jdbcType=DATE},
+            </if>
+            <if test="record.state != null">
+                `state` = #{record.state,jdbcType=VARCHAR},
+            </if>
+            <if test="record.num != null">
+                num = #{record.num,jdbcType=INTEGER},
+            </if>
+            <if test="record.prodate != null">
+                prodate = #{record.prodate,jdbcType=DATE},
+            </if>
+            <if test="record.reldate != null">
+                reldate = #{record.reldate,jdbcType=DATE},
+            </if>
+            <if test="record.pride != null">
+                pride = #{record.pride,jdbcType=VARCHAR},
+            </if>
+            <if test="record.picUrl != null">
+                pic_url = #{record.picUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update goods
+        set id = #{record.id,jdbcType=INTEGER},
+        `name` = #{record.name,jdbcType=VARCHAR},
+        onshelf = #{record.onshelf,jdbcType=DATE},
+        offshelf = #{record.offshelf,jdbcType=DATE},
+        `state` = #{record.state,jdbcType=VARCHAR},
+        num = #{record.num,jdbcType=INTEGER},
+        prodate = #{record.prodate,jdbcType=DATE},
+        reldate = #{record.reldate,jdbcType=DATE},
+        pride = #{record.pride,jdbcType=VARCHAR},
+        pic_url = #{record.picUrl,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.oracle.po.Goods">
+        update goods
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="onshelf != null">
+                onshelf = #{onshelf,jdbcType=DATE},
+            </if>
+            <if test="offshelf != null">
+                offshelf = #{offshelf,jdbcType=DATE},
+            </if>
+            <if test="state != null">
+                `state` = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="num != null">
+                num = #{num,jdbcType=INTEGER},
+            </if>
+            <if test="prodate != null">
+                prodate = #{prodate,jdbcType=DATE},
+            </if>
+            <if test="reldate != null">
+                reldate = #{reldate,jdbcType=DATE},
+            </if>
+            <if test="pride != null">
+                pride = #{pride,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.oracle.po.Goods" >
-    update goods
-    set name = #{name,jdbcType=VARCHAR},
-      onshelf = #{onshelf,jdbcType=DATE},
-      offshelf = #{offshelf,jdbcType=DATE},
-      state = #{state,jdbcType=VARCHAR},
-      num = #{num,jdbcType=INTEGER},
-      prodate = #{prodate,jdbcType=DATE},
-      reldate = #{reldate,jdbcType=DATE},
-      pride = #{pride,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <update id="updateByPrimaryKey" parameterType="com.oracle.po.Goods">
+        update goods
+        set `name`   = #{name,jdbcType=VARCHAR},
+            onshelf  = #{onshelf,jdbcType=DATE},
+            offshelf = #{offshelf,jdbcType=DATE},
+            `state`  = #{state,jdbcType=VARCHAR},
+            num      = #{num,jdbcType=INTEGER},
+            prodate  = #{prodate,jdbcType=DATE},
+            reldate  = #{reldate,jdbcType=DATE},
+            pride    = #{pride,jdbcType=VARCHAR},
+            pic_url  = #{picUrl,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

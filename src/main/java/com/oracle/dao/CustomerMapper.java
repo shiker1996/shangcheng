@@ -9,7 +9,9 @@ public interface CustomerMapper {
 
     int insertSelective(Customer record);
 
-    Customer selectByPrimaryKey(String phone);
+    Customer selectByPhone(String phone);
+
+    Customer selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Customer record);
 

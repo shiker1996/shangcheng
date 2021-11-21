@@ -304,8 +304,8 @@
                                                 <div class="product-thumbnail">
                                                     <a href="station?id=${goods.id }"
                                                        class="product-item-photo">
-                                                        <img class="product-image-photo" src="img/${goods.picUrl}"
-                                                             alt=""></a></div>
+                                                        <img class="product-image-photo " src="img/${goods.picUrl}"
+                                                             alt="" height="300px"></a></div>
                                                 <div class="pro-box-info">
                                                     <div class="item-info">
                                                         <div class="info-inner">

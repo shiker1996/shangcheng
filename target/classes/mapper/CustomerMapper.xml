@@ -39,16 +39,16 @@
             <if test="phone != null">
                 phone,
             </if>
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="password != null" >
-        password,
-      </if>
-    </trim>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+        </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},

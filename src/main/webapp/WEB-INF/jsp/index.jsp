@@ -30,34 +30,34 @@
     <!-- CSS Style -->
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
     <!-- font-awesome & simple line icons CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/font-awesome.css" media="all">
-    <link rel="stylesheet" type="text/css" href="/css/simple-line-icons.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/simple-line-icons.css" media="all">
 
     <!-- owl.carousel CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="/css/owl.theme.css">
-    <link rel="stylesheet" type="text/css" href="/css/owl.transitions.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.theme.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.transitions.css">
 
     <!-- animate CSS  -->
-    <link rel="stylesheet" type="text/css" href="/css/animate.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/animate.css" media="all">
 
     <!-- flexslider CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/flexslider.css">
+    <link rel="stylesheet" type="text/css" href="css/flexslider.css">
 
     <!-- jquery-ui.min CSS  -->
-    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 
     <!-- Mean Menu CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/meanmenu.min.css">
+    <link rel="stylesheet" type="text/css" href="css/meanmenu.min.css">
 
     <!-- nivo-slider css -->
-    <link rel="stylesheet" type="text/css" href="/css/nivo-slider.css">
+    <link rel="stylesheet" type="text/css" href="css/nivo-slider.css">
 
     <!-- style CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 
 </head>
 
@@ -85,6 +85,9 @@
                                                              aria-haspopup="true" aria-expanded="false" href="#"><span>我的账户 </span>
                                         <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
+                                            <%
+                                                if (request.getSession().getAttribute("customer") != null) {
+                                            %>
                                             <li><a href="http://localhost:8080/cinfo?phone=${customer.phone }">账户</a>
                                             </li>
                                             <li>
@@ -93,7 +96,7 @@
                                             <li><a href="http://localhost:8080/record?name=${customer.name }">消费记录</a>
                                             </li>
                                             <%
-                                                if (request.getSession().getAttribute("customer") == null) {
+                                            } else if (request.getSession().getAttribute("customer") == null) {
                                             %>
                                             <li class="divider"></li>
                                             <li><a href="http://localhost:8080/logout">登录</a></li>
@@ -115,7 +118,7 @@
                     <div class="col-sm-3 col-md-3 col-xs-12">
                         <!-- Header Logo -->
                         <div class="logo"><a title="e-commerce" href="index.html"><img alt="e-commerce"
-                                                                                       src="/images/logo.png"></a></div>
+                                                                                       src="images/logo.png"></a></div>
                         <!-- End Header Logo -->
                     </div>
                     <div class="col-lg-3 col-sm-4 col-xs-12 top-cart">
@@ -150,10 +153,8 @@
                                             <div class="top-subtotal">总价: <span class="price"> ￥${cartTotalPrice}</span>
                                             </div>
                                             <div class="actions">
-                                                <button onclick="location.href='checkout.html'" class="btn-checkout"
-                                                        type="button"><i class="fa fa-check"></i><span>账单</span>
-                                                </button>
-                                                <button onclick="location.href='shopping_cart.html'" class="view-cart"
+                                                <button onclick="location.href='http://localhost:8080/cart/list?customerId=${customer.id }'"
+                                                        class="view-cart"
                                                         type="button"><i class="fa fa-shopping-cart"></i>
                                                     <span>购物车</span>
                                                 </button>
@@ -205,7 +206,7 @@
                              style="display: none;">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header"><img id="img_logo" src="/images/logo.png" alt="logo">
+                                    <div class="modal-header"><img id="img_logo" src="images/logo.png" alt="logo">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                                     </div>
@@ -252,48 +253,106 @@
     </div>
     <!-- End Menu Area -->
     <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <div class="category-description"><a href="#"><img src="images/cat-img1.jpg" alt="banner"></a></div>
+            <div class="row">
+                <div class="col-main col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="shop-inner">
+                        <div class="product-grid-area">
+                            <ul class="products-grid">
+                                <c:forEach items="${list }" var="goods">
+                                    <div class="modal fade" id="cart-modal-${goods.id}" tabindex="-1" role="dialog"
+                                         aria-hidden="true"
+                                         style="display: none;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header"><img id="img_logo" src="images/logo.png"
+                                                                               alt="logo">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span class="glyphicon glyphicon-remove"
+                                                              aria-hidden="true"></span></button>
+                                                </div>
+                                                <div id="div-forms">
+                                                    <form action="cart/add" method="get" class="form-horizontal"
+                                                          id="login-form">
+                                                        <div class="modal-body">
+                                                            <input id="goodsNum" name="goodsNum" class="form-control"
+                                                                   type="number"
+                                                                   placeholder="数量" required>
+                                                            <input type="hidden" name="goodsId" id="goodsId"
+                                                                   value="${goods.id }">
 
-    <section class="main-container col1-layout">
-
-        <div class="main container">
-            <div class="col-main">
-                <div class="cart">
-
-                    <div class="page-content page-order">
-                        <div class="page-title">
-                            <h2>消费记录</h2>
-                        </div>
-
-
-                        <div class="order-detail-content">
-                            <div class="table-responsive">
-                                <table class="table table-bordered cart_summary">
-                                    <thead>
-                                    <tr>
-                                        <th>交易序号</th>
-                                        <th>商品名</th>
-                                        <th>购买人</th>
-                                        <th>商品序号</th>
-                                        <th>交易状态</th>
-                                    </tr>
-                                    </thead>
-                                    <c:forEach items="${list }" var="record">
-                                        <tr>
-                                            <td>${record.id }</td>
-                                            <td>${record.gname }</td>
-                                            <td>${record.name }</td>
-                                            <td>${record.gid }</td>
-                                            <td>${record.gstate }</td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                            </div>
+                                                            <input type="hidden" name="customerId" id="customerId"
+                                                                   value="${customer.id }">
+                                                            <p class="bg-danger">${msg }</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div>
+                                                                <button type="submit" class="btn-login">加入购物车</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <div class="product-item">
+                                            <div class="item-inner">
+                                                <div class="product-thumbnail">
+                                                    <a href="station?id=${goods.id }"
+                                                       class="product-item-photo">
+                                                        <img class="product-image-photo" src="img/${goods.picUrl}"
+                                                             alt=""></a></div>
+                                                <div class="pro-box-info">
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"><a title="${goods.name }"
+                                                                                       href="station?id=${goods.id }">${goods.name }</a>
+                                                            </div>
+                                                            <div class="item-content">
+                                                                <div class="list-group-item-text">库存：${goods.num}</div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box">
+                                                                        <p class="special-price"><span
+                                                                                class="price-label">特价</span>
+                                                                            <span class="price"> ￥${goods.pride }</span>
+                                                                        </p>
+                                                                        <p class="old-price"><span
+                                                                                class="price-label">原价:</span>
+                                                                            <span class="price"> ￥${goods.pride } </span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="box-hover">
+                                                        <div class="product-item-actions">
+                                                            <div class="pro-actions">
+                                                                <button class="action add-to-cart" type="button"
+                                                                        title="Add to Cart">
+                                                                    <a href="#" class="" role="button"
+                                                                       data-toggle="modal"
+                                                                       data-target="#cart-modal-${goods.id}">添加到购物车</a>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </c:forEach>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     <!-- Main Container End -->
     <!-- our clients Slider -->
     <!--底部服务-->
@@ -356,37 +415,37 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 
 <!-- bootstrap js -->
-<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 <!-- Mean Menu js -->
-<script type="text/javascript" src="/js/jquery.meanmenu.min.js"></script>
+<script type="text/javascript" src="js/jquery.meanmenu.min.js"></script>
 
 <!-- owl.carousel.min js -->
-<script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 
 <!-- bxslider js -->
-<script type="text/javascript" src="/js/jquery.bxslider.js"></script>
+<script type="text/javascript" src="js/jquery.bxslider.js"></script>
 
 <!--jquery-ui.min js -->
-<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 
 <!-- countdown js -->
-<script type="text/javascript" src="/js/countdown.js"></script>
+<script type="text/javascript" src="js/countdown.js"></script>
 
 <!-- wow JS -->
-<script type="text/javascript" src="/js/wow.min.js"></script>
+<script type="text/javascript" src="js/wow.min.js"></script>
 
 <!--cloud-zoom js -->
-<script type="text/javascript" src="/js/cloud-zoom.js"></script>
+<script type="text/javascript" src="js/cloud-zoom.js"></script>
 
 <!-- main js -->
-<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 
 <!-- nivo slider js -->
-<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
+<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
 
 <!-- flexslider js -->
-<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
+<script type="text/javascript" src="js/jquery.flexslider.js"></script>
 
 </body>
 </html>

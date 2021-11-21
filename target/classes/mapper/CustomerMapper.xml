@@ -29,16 +29,16 @@
     </delete>
     <insert id="insert" parameterType="com.oracle.po.Customer">
         insert into customer (phone, id, name,
-      password)
-    values (#{phone,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.oracle.po.Customer" >
-    insert into customer
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="phone != null" >
-        phone,
-      </if>
+                              password)
+        values (#{phone,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.oracle.po.Customer">
+        insert into customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                phone,
+            </if>
       <if test="id != null" >
         id,
       </if>

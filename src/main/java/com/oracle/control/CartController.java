@@ -31,12 +31,17 @@ public class CartController {
     public ModelAndView getList(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         Customer customer = (Customer) request.getSession().getAttribute("customer");
+        if (customer == null) {
+            mav.setViewName("login");
+            return mav;
+        }
         List<UserCart> list = cartMapperSupport.getUserCarts(customer.getId());
         List<CartDto> result = new ArrayList<>();
         for (UserCart userCart : list) {
             CartDto cartDto = new CartDto();
             cartDto.setUserCart(userCart);
             Goods goods = goodsService.selectByPrimaryKey(userCart.getGoodsId());
+            cartDto.setTotalPrice(Double.parseDouble(goods.getPride()) * userCart.getGoodsNum());
             cartDto.setGoods(goods);
             result.add(cartDto);
         }
@@ -47,11 +52,26 @@ public class CartController {
 
     @RequestMapping("add")
     public String add(Integer customerId, Integer goodsNum, Integer goodsId) {
+        if (customerId == null || customerId == 0) {
+            return "redirect:/login";
+        }
         UserCart userCart = new UserCart();
         userCart.setCustomerId(customerId);
         userCart.setGoodsId(goodsId);
         userCart.setGoodsNum(goodsNum);
         userCartDao.insertSelective(userCart);
+        return "redirect:/cart/list";
+
+    }
+
+    @RequestMapping("del")
+    public String add(Integer cartId) {
+        if (cartId == null || cartId == 0) {
+            return "redirect:/login";
+        }
+        List<Integer> ids = new ArrayList<>();
+        ids.add(cartId);
+        cartMapperSupport.invalidCart(ids);
         return "redirect:/cart/list";
 
     }

@@ -189,8 +189,7 @@
                                     <a href="http://localhost:8080/cart/list?customerId=${customer.id }">购物车</a>
                                 </li>
                                 <li class="custom-menu"><a href="http://localhost:8080/record?name=${customer.name }">消费记录</a>
-                                <li class="custom-menu"><a href="http://localhost:8080/logout">退出</a></li>
-                                <%
+                                        <%
                                     }
                                 %>
                             </ul>
@@ -252,46 +251,74 @@
     </div>
     <!-- End Menu Area -->
     <!-- Main Container -->
-
     <section class="main-container col1-layout">
-
         <div class="main container">
-            <div class="col-main">
-                <div class="cart">
-
-                    <div class="page-content page-order">
-                        <div class="page-title">
-                            <h2>消费记录</h2>
-                        </div>
 
 
-                        <div class="order-detail-content">
-                            <div class="table-responsive">
-                                <table class="table table-bordered cart_summary">
-                                    <thead>
-                                    <tr>
-                                        <th>交易序号</th>
-                                        <th>商品名</th>
-                                        <th>购买人</th>
-                                        <th>商品序号</th>
-                                        <th>交易状态</th>
-                                    </tr>
-                                    </thead>
-                                    <c:forEach items="${list }" var="record">
-                                        <tr>
-                                            <td>${record.id }</td>
-                                            <td>${record.gname }</td>
-                                            <td>${record.name }</td>
-                                            <td>${record.gid }</td>
-                                            <td>${record.gstate }</td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                            </div>
+            <div class="page-content">
+
+                <div class="account-login">
+
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <form action="registerReq" method="post" class="form-horizontal" id="form">
+                                <div class="form-group">
+                                    <label for="phoneNum" class="col-sm-3 control-label">手机号:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="phone" class="form-control" id="phoneNum"
+                                               placeholder="请输入手机号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNum" class="col-sm-3 control-label">姓名:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="phone" class="form-control" id="phoneNum"
+                                               placeholder="请输入姓名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password1" class="col-sm-3 control-label"> 密码</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" name="password1" class="form-control" id="password1"
+                                               placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password2" class="col-sm-3 control-label"> 密码</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" name="password2" class="form-control" id="password2"
+                                               placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountType" class="col-sm-3 control-label"> 用户类型 </label>
+                                    <div class="col-sm-8">
+                                        <select name="type" class="form-control" id="accountType">
+                                            <option>--请选择账户类型--</option>
+                                            <option value="customer">顾客</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-md-offset-3">
+                                        <p class="bg-danger">${msg }</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-md-offset-3">
+                                        <input class="btn btn-success" type="submit" value="注册">
+
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
     <!-- Main Container End -->

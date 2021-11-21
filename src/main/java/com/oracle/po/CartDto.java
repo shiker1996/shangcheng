@@ -6,6 +6,16 @@ public class CartDto {
 
     private UserCart userCart;
 
+    private Double totalPrice;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public Goods getGoods() {
         return goods;
     }

@@ -3,10 +3,7 @@ package com.oracle.control;
 import com.oracle.dao.CustomerMapper;
 import com.oracle.dao.UserCartDao;
 import com.oracle.dao.support.CartMapperSupport;
-import com.oracle.po.Customer;
-import com.oracle.po.Goods;
-import com.oracle.po.Record;
-import com.oracle.po.UserCart;
+import com.oracle.po.*;
 import com.oracle.service.CustomerService;
 import com.oracle.service.GoodsService;
 import com.oracle.service.RecordService;
@@ -45,7 +42,7 @@ public class GoodsController {
     private CustomerMapper customerMapper;
 
     @RequestMapping("elist")
-    public ModelAndView Elist() {
+    public ModelAndView elist(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("list", goodsService.selectAll());
         mav.setViewName("elist");
@@ -54,7 +51,6 @@ public class GoodsController {
 
     @RequestMapping("clist")
     public ModelAndView Clist() {
-        System.out.println("haha");
         ModelAndView mav = new ModelAndView();
         List<Goods> list = goodsService.selectAll();
         List<Goods> clist = new ArrayList<>();
